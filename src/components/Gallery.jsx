@@ -1,13 +1,24 @@
-import React, { useContext } from 'react';
-import { PhotoContext } from '../context/PhotoContext';  // Ruta ajustada
+import { useFavoritePhotoContext } from "../context/FavoritePhotoContext";
+import IconHeart from "./IconHeart";
 
 const Gallery = () => {
-  const { photos } = useContext(PhotoContext);
+
+  const {  favoritePhotos, toggleLiked } = useFavoritePhotoContext();
+
 
   return (
     <div className="gallery grid-columns-5 p-3">
-      {photos.map((photo) => (
-        <img className="photo grid-columns-4" key={photo.id} src={photo.src.original} alt={photo.alt} />
+      {favoritePhotos.map((photo) => (
+        <div>  
+            <IconHeart filled={photo.liked}/>
+          <img  
+            className="photo grid-columns-4" 
+            onClick={  () =>  toggleLiked(photo.id) }
+            key={photo.id} 
+            src={photo.src.original} 
+            alt={photo.alt} 
+          />
+        </div>
       ))}
     </div>
   );
